@@ -35,6 +35,14 @@ export const createUser=async(req, res)=>{
 export const getUsers=async(req, res)=>{
     try{
         const users= await USER.find();
+
+        if (!users || users.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No users found"
+            });
+        }
+
         return res.status(200).json({
             succes: true,
             message: "Users fetched successfully",

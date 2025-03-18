@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
+import axios from "axios";
+// import { toast } from 'react-toastify';
 import { inputValidation } from '../schemas'
 import { ToastContainer, toast } from 'react-toastify';
 import InputComponents from './InputComponents';
@@ -23,16 +25,38 @@ const Form = () => {
     const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
         initialValues,
         validationSchema: inputValidation,
-        onSubmit: (values, action) => {
-            setTimeout(() => {
-                setShow(false);
-                console.log(JSON.stringify(values));
-                toast.success("Form submitted successfully");
-                
-            }, 3000);
+        onSubmit:async (values, action) => {
+            await axios
+                .post("http://localhost:4000/api/registeruser",
+
+                    {
+                        name: values.name,
+                        age: values.age,
+                        email: values.email,
+                        courseSelection: values.cs
+                    },
+
+                    {
+                        withCredentials: true,
+                        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "http://localhost:4000/" }
+                    }
+
+                )
+                .then(setTimeout((data) => {
+                    setShow(false);
+                    console.log(JSON.stringify(values));
+
+                    !(data?.message =="User already registered") &&(toast.success("Form submitted successfully"));
+
+                }, 3000))
+                .catch((error) => {
+                    toast.error(error.response?.data?.message || "Something went wrong");
+                })
             setShow(true);
         },
     });
+
+   
 
     return (
         <>
@@ -43,7 +67,7 @@ const Form = () => {
                 <div></div>
                
             </div></div>}
-            <form className="bg-slate-900 rounded-lg px-10 py-10 flex flex-col gap-y-5 shadow-lg max-md:px-5 max-md:w-5/6" onSubmit={handleSubmit}>
+            <form className="bg-slate-900 rounded-lg px-10 py-10 flex flex-col gap-y-5 shadow-lg max-md:px-5 max-md:w-5/6" onSubmit= {handleSubmit}>
                 <h1 className="text-center text-white text-3xl font-extrabold mb-5 max-md:text-xl">Student Registration Form</h1>
                 <InputComponents name="name" type="text" handleChange={handleChange} handleBlur={handleBlur} values={values} errors={errors} touched={touched} />
                 <InputComponents name="age" type="text" handleChange={handleChange} handleBlur={handleBlur} values={values} errors={errors} touched={touched} />

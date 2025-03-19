@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect,useState } from 'react';
 import UserData from '../components/UserData.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
+    const navigate = useNavigate()
 
     const fetchUsers = async () => {
         try {
@@ -25,6 +27,16 @@ const UserList = () => {
           <div className="flex justify-center items-center h-screen w-screen bg-gray-900 text-white">
               <div className="w-full max-w-4xl bg-gray-800 p-6 rounded-lg shadow-lg">
                   <h2 className="text-2xl font-bold text-center mb-4">User List</h2>
+
+                  <div className="flex justify-end mb-4">
+                      <button
+                          onClick={() => navigate('/')}
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      >
+                          Home
+                      </button>
+                  </div>
+
                   <div className="overflow-x-auto">
                       <table className="w-full border-collapse border border-gray-700">
                           <thead>

@@ -5,9 +5,11 @@ import axios from "axios";
 import { inputValidation } from '../schemas'
 import { ToastContainer, toast } from 'react-toastify';
 import InputComponents from './InputComponents';
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
     const [show, setShow] = useState(false);
+    const navigate = useNavigate();
 
     const clearStorage = () => {
         localStorage.removeItem("name");
@@ -26,33 +28,30 @@ const Form = () => {
         initialValues,
         validationSchema: inputValidation,
         onSubmit:async (values, action) => {
-            await axios
-                .post("http://localhost:4000/api/registeruser",
+            try {
+                const response = await axios.post("http://localhost:4000/api/registeruser", {
+                    name: values.name,
+                    age: values.age,
+                    email: values.email,
+                    courseSelection: values.cs
+                }, {
+                    withCredentials: true,
+                    headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "http://localhost:4000/" }
+                });
 
-                    {
-                        name: values.name,
-                        age: values.age,
-                        email: values.email,
-                        courseSelection: values.cs
-                    },
+                if (response.data?.message === "User already registered") {
+                    toast.error("User already registered");
+                } else {
+                    toast.success("Form submitted successfully");
 
-                    {
-                        withCredentials: true,
-                        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "http://localhost:4000/" }
-                    }
-
-                )
-                .then(setTimeout((data) => {
-                    setShow(false);
-                    console.log(JSON.stringify(values));
-
-                    !(data?.message =="User already registered") &&(toast.success("Form submitted successfully"));
-
-                }, 3000))
-                .catch((error) => {
-                    toast.error(error.response?.data?.message || "Something went wrong");
-                })
-            setShow(true);
+                    
+                    setTimeout(() => {
+                        navigate("/users");
+                    }, 2000); 
+                }
+            } catch (error) {
+                toast.error(error.response?.data?.message || "Something went wrong");
+            }
         },
     });
 

@@ -3,11 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const UpdateUser = () => {
-    const { id } = useParams(); // Get user ID from the URL
+    const { id } = useParams(); 
     const navigate = useNavigate();
     const [user, setUser] = useState({ name: "", age: "", email: "", courseSelection: "" });
 
-    // Fetch user details when the component loads
+   
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -23,18 +23,18 @@ const UpdateUser = () => {
         if (id) fetchUserData();
     }, [id]);
 
-    // Handle input changes
+   
     const handleChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
 
-    // Handle form submission for updating the user
+   
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await axios.put(`http://localhost:4000/api/updateuser/${id}`, user);
             alert("User updated successfully!");
-            navigate("/users"); // Redirect back to UserList
+            navigate("/users"); 
         } catch (error) {
             console.error("Error updating user:", error);
         }

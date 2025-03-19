@@ -1,6 +1,21 @@
 import React from 'react';
+import axios from 'axios';
 
-const UserData = ({ users }) => {
+const UserData = ({ users, fetchUsers }) => {
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`http://localhost:4000/api/deleteuser/${id}`);
+            fetchUsers();
+        } catch (error) {
+            console.error("Error deleting user:", error);
+        }
+    };
+
+    const handleUpdate = (id) => {
+        window.location.href = `/updateuser/${id}`; 
+    };
+
     return (
         <>
             {users.map((curUser, index) => {
@@ -12,6 +27,22 @@ const UserData = ({ users }) => {
                         <td className="p-3 border border-gray-600 text-center">{age}</td>
                         <td className="p-3 border border-gray-600 text-center">{email}</td>
                         <td className="p-3 border border-gray-600 text-center">{courseSelection}</td>
+                        <td className="p-3 border border-gray-600 text-center">
+                            <button
+                                onClick={() => handleUpdate(_id)}
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded transition-all"
+                            >
+                                Update
+                            </button>
+                        </td>
+                        <td className="p-3 border border-gray-600 text-center">
+                            <button
+                                onClick={() => handleDelete(_id)}
+                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded transition-all"
+                            >
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                 );
             })}

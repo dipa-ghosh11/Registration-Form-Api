@@ -15,6 +15,8 @@ const UserList = () => {
         }
     };
 
+   
+
     useEffect(()=>{
         fetchUsers("http://localhost:4000/api/getuser")
     },[])
@@ -31,10 +33,11 @@ const UserList = () => {
                                   <th className="p-3 border border-gray-600">Age</th>
                                   <th className="p-3 border border-gray-600">Email</th>
                                   <th className="p-3 border border-gray-600">Course</th>
+                            
                               </tr>
                           </thead>
                           <tbody>
-                              <UserData users={users} />
+                              <UserData users={users} fetchUsers={fetchUsers} />
                           </tbody>
                       </table>
                   </div>

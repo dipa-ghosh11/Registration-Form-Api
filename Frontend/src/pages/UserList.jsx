@@ -22,7 +22,7 @@ const UserList = () => {
     },[])
   return (
     <>
-          <div className="flex justify-center items-center min-h-full bg-gray-900 text-white">
+          <div className="flex justify-center items-center h-screen w-screen bg-gray-900 text-white">
               <div className="w-full max-w-4xl bg-gray-800 p-6 rounded-lg shadow-lg">
                   <h2 className="text-2xl font-bold text-center mb-4">User List</h2>
                   <div className="overflow-x-auto">

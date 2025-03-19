@@ -41,7 +41,7 @@ const UpdateUser = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
+        <div className="flex flex-col items-center justify-center min-h-screen w-screen bg-gray-900 text-white">
             <div className="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold text-center mb-4">Update User</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col">
@@ -72,15 +72,21 @@ const UpdateUser = () => {
                         className="p-2 mb-2 bg-gray-700 text-white rounded"
                         required
                     />
-                    <input
-                        type="text"
+                    <select
                         name="courseSelection"
                         value={user.courseSelection}
                         onChange={handleChange}
-                        placeholder="Course"
                         className="p-2 mb-4 bg-gray-700 text-white rounded"
                         required
-                    />
+                    >
+                        <option value="" hidden>Select Course</option>
+                        <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                        <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+                        <option value="Applied Electronics and Instrumentation Engineering">Applied Electronics and Instrumentation Engineering</option>
+                        <option value="Civil Engineering">Civil Engineering</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Electrical Engineering">Electrical Engineering</option>
+                    </select>
                     <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Update
                     </button>

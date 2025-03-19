@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Form from "./components/RegistrationForm.jsx";
 import UserList from "./pages/UserList.jsx";
+import UpdateUser from "./components/UpdateUser.jsx";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Form />} />
           <Route path="/users" element={<UserList />} />
+          <Route path="/updateuser/:id" element={<UpdateUser />} />
         </Routes>
       </div>
     </Router>

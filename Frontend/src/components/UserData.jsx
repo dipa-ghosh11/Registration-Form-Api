@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserData = ({ users, fetchUsers }) => {
+    const navigate = useNavigate();
 
     const handleDelete = async (id) => {
         try {
@@ -13,7 +15,8 @@ const UserData = ({ users, fetchUsers }) => {
     };
 
     const handleUpdate = (id) => {
-        window.location.href = `/updateuser/${id}`; 
+        
+        navigate(`/updateuser/${id}`);
     };
 
     return (

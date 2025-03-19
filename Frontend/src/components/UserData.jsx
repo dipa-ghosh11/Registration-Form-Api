@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const UserData = ({ users, fetchUsers }) => {
     const navigate = useNavigate();
@@ -8,8 +9,11 @@ const UserData = ({ users, fetchUsers }) => {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:4000/api/deleteuser/${id}`);
-            fetchUsers();
+            toast.success("User deleted successsfully");
+            window.location.reload();
+            // fetchUsers();
         } catch (error) {
+            toast.error("Error deleting user!")
             console.error("Error deleting user:", error);
         }
     };
@@ -25,7 +29,7 @@ const UserData = ({ users, fetchUsers }) => {
                 const { _id, name, age, email, courseSelection } = curUser;
 
                 return (
-                    <tr key={_id} className={`${index % 2 === 0 ? "bg-gray-700" : "bg-gray-800"} hover:bg-gray-600 transition-all`}>
+                    <tr key={_id} className={`${index % 2 === 0 ? "bg-gray-800" : "bg-gray-00"} hover:bg-gray-600 transition-all`}>
                         <td className="p-3 border border-gray-600 text-center">{name}</td>
                         <td className="p-3 border border-gray-600 text-center">{age}</td>
                         <td className="p-3 border border-gray-600 text-center">{email}</td>

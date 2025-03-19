@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify'
 import axios from "axios";
 
 const UpdateUser = () => {
@@ -8,21 +9,6 @@ const UpdateUser = () => {
     const [user, setUser] = useState({ name: "", age: "", email: "", courseSelection: "" });
 
    
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await axios.get(`http://localhost:4000/api/getuser/${id}`);
-                if (!response.data) {
-                    console.log("No user data found.");
-                }
-                setUser(response.data);
-            } catch (error) {
-                console.error("Error fetching user data:", error.response?.data || error.message);
-            }
-        };
-        if (id) fetchUserData();
-    }, [id]);
-
    
     const handleChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
@@ -33,7 +19,7 @@ const UpdateUser = () => {
         e.preventDefault();
         try {
             await axios.put(`http://localhost:4000/api/updateuser/${id}`, user);
-            alert("User updated successfully!");
+            toast.success("User updated successfully!");
             navigate("/users"); 
         } catch (error) {
             console.error("Error updating user:", error);
@@ -41,7 +27,7 @@ const UpdateUser = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen w-screen bg-gray-900 text-white">
+        <div className="flex flex-col items-center justify-center h-screen w-screen bg-gray-900 text-white">
             <div className="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold text-center mb-4">Update User</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col">
